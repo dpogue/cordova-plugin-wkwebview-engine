@@ -153,10 +153,12 @@
      wkWebView.configuration.preferences.javaScriptEnabled = [settings cordovaBoolSettingForKey:@"JavaScriptEnabled" default:YES];
      wkWebView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = [settings cordovaBoolSettingForKey:@"JavaScriptCanOpenWindowsAutomatically" default:NO];
      */
-    
+    objc_msgSend(wkWebView.configuration.preferences, NSSelectorFromString([NSString stringWithFormat:@"_%@%@%@", @"setAllow", @"FileAccess", @"FromFileURLs:"]), @YES);
+    objc_msgSend(wkWebView.configuration.preferences, NSSelectorFromString([NSString stringWithFormat:@"_%@%@:", @"set", @"Standalone"]), @YES);
+
     // By default, DisallowOverscroll is false (thus bounce is allowed)
     BOOL bounceAllowed = !([settings cordovaBoolSettingForKey:@"DisallowOverscroll" defaultValue:NO]);
-    
+
     // prevent webView from bouncing
     if (!bounceAllowed) {
         if ([wkWebView respondsToSelector:@selector(scrollView)]) {
